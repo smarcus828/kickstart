@@ -1,0 +1,26 @@
+### small, but works
+install
+lang en_US.UTF-8
+keyboard us
+timezone America/New_York
+authconfig --enableshadow --passalgo=sha512
+eula --agreed
+ignoredisk --only-use=sda
+reboot
+
+bootloader --location=mbr
+zerombr
+clearpart --all --initlabel
+part swap --asprimary --fstype="swap" --size=1024
+part /boot --fstype xfs --size=200
+part pv.01 --size=1 --grow
+volgroup rootvg01 pv.01
+logvol / --fstype xfs --name=lv01 --vgname=rootvg01 --size=1 --grow
+
+rootpw --iscrypted $6$ALixn2YhmIX.4F89$fxghXH8AkVe/P9hjiGlgxzhKKXHjxOkEbBaMiX7gVMeCulMhYM/VCl8KHgbGTEoTWS/PhCDubJ4.PACU1iQJs1
+
+url --url=http://ltdan.magicalchicken.com/mirrors/centos/7/x86_64/os/
+
+%packages --nobase --ignoremissing
+@core
+%end
